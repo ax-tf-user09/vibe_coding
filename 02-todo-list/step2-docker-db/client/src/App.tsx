@@ -9,8 +9,21 @@ type Todo = {
 
 const API_URL = "http://localhost:3000/api/todos";
 const MAX_TEXT_LENGTH = 200;
+const THEME_KEY = "todo-theme";
+
+type Theme = "dark" | "light";
+
+function readTheme(): Theme {
+  try {
+    const saved = localStorage.getItem(THEME_KEY);
+    return saved === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+}
 
 function App() {
+  const [theme, setTheme] = useState<Theme>(readTheme);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [text, setText] = useState("");
   const [error, setError] = useState("");
@@ -42,6 +55,15 @@ function App() {
   useEffect(() => {
     void loadTodos();
   }, []);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {
+      // 저장에 실패해도 화면 모드는 바꿀 수 있게 둔다.
+    }
+  }, [theme]);
 
   async function handleAdd(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,8 +134,23 @@ function App() {
 
       <main className="page">
         <header className="page-header">
-          <h1>할 일 목록</h1>
-          <p className="lead">할 일을 추가하고, 끝나면 체크하세요.</p>
+          <div className="page-header-text">
+            <h1>할 일 목록</h1>
+            <p className="lead">할 일을 추가하고, 끝나면 체크하세요.</p>
+          </div>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={() => {
+              setTheme((current) => (current === "dark" ? "light" : "dark"));
+            }}
+            aria-pressed={theme === "light"}
+            aria-label={
+              theme === "dark" ? "밝은 모드로 바꾸기" : "다크 모드로 바꾸기"
+            }
+          >
+            {theme === "dark" ? "밝은 모드" : "다크 모드"}
+          </button>
         </header>
 
         <section className="card" aria-labelledby="todo-heading">

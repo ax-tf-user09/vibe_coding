@@ -38,6 +38,22 @@
   --motion-duration-instant: 300ms;
   --focus-ring: 2px solid var(--color-text-tertiary);
   --focus-offset: 2px;
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --color-text-primary: #9ca3af;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #151c2d;
+  --color-text-inverse: #0000ee;
+  --color-text-link: #1d4ed8;
+  --color-text-error: #b91c1c;
+  --color-surface-base: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-surface-strong: #f4f5f7;
+  --color-border-subtle: #d1d5db;
+  --focus-ring: 2px solid var(--color-text-tertiary);
+  color-scheme: light;
 }
 
 * {
