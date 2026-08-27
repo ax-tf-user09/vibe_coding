@@ -1,0 +1,9 @@
+# 비밀번호·접속 정보
+.env
+.env.*
+!.env.example
+
+# 설치·빌드 결과
+node_modules
+dist
+*.log
